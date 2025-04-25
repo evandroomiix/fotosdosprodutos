@@ -3,24 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Criador de Cartazes - Lojas Nordestina</title>
+  <title>Criador de Flyer Produtos</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f0f0f0;
-      margin: 20px;
+      margin: 0;
+      padding: 20px;
     }
 
+    /* Estilo da Primeira Tela */
     .input-section {
       max-width: 600px;
-      margin: 20px auto;
+      margin: 80px auto 20px;
       padding: 25px;
       background: white;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: relative;
     }
 
+    .logo-topo {
+      position: absolute;
+      top: -60px;
+      left: 25px;
+      width: 180px;
+    }
+
+    .avisos {
+      color: #666;
+      font-size: 14px;
+      margin: 20px 0;
+      line-height: 1.5;
+    }
+
+    /* Estilo do Cartaz */
     .cartaz {
       width: 500px;
       margin: 30px auto;
@@ -33,12 +51,13 @@
     .image-container {
       width: 100%;
       height: 400px;
-      background: #f8f8f8;
+      background: white;
       border-radius: 8px;
       margin-bottom: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
+      border: 2px solid #eee;
     }
 
     .produto-imagem {
@@ -57,45 +76,45 @@
     }
 
     .produto-preco {
-      font-size: 22px;
+      font-size: 35px;
       color: #2e7d32;
-      font-weight: bold;
+      font-weight: 800;
       text-align: center;
-      margin: 20px 0;
+      margin: 25px 0;
     }
 
     .footer-bar {
       background: #2e7d32;
       padding: 15px;
       border-radius: 8px;
-      margin-top: 25px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     .logo {
-      width: 120px;
+      width: 140px;
+      margin-left: 10px;
     }
 
     .contatos {
       color: white;
-      font-size: 14px;
-      line-height: 1.6;
+      font-size: 25px;
+      line-height: 1.3;
+      margin-right: 20px;
     }
 
     .contatos i {
-      margin-right: 8px;
-      width: 20px;
+      margin-right: 12px;
     }
 
     .btn-download {
       background: #2e7d32;
       color: white;
       border: none;
-      padding: 12px 25px;
-      border-radius: 5px;
-      font-size: 16px;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 18px;
       cursor: pointer;
       display: block;
       margin: 20px auto;
@@ -109,25 +128,34 @@
 
     input[type="file"], input[type="text"] {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin: 10px 0;
       border: 2px solid #ddd;
-      border-radius: 5px;
+      border-radius: 8px;
       font-size: 16px;
     }
   </style>
 </head>
 <body>
+  <!-- Primeira Tela -->
   <div class="input-section">
-    <h2 style="color: #2e7d32; text-align: center">Criador de Cartaz</h2>
+    <img src="logo.png" class="logo-topo" alt="Logo">
+    <h2 style="color: #2e7d32; text-align: center; margin-bottom: 15px;">CRIADOR DE FLYER PRODUTOS</h2>
     
     <input type="file" id="upload" accept="image/*" required>
     <input type="text" id="nomeProduto" placeholder="Nome do Produto" required>
-    <input type="text" id="precoProduto" placeholder="Preço (opcional) Ex: 99.90">
-    
+    <input type="text" id="precoProduto" placeholder="Preço (opcional) Ex: 1.199,99">
+
+    <div class="avisos">
+      * Adicione fotos com boa qualidade e sem borrados<br>
+      * Tamanho máximo das imagens: 5MB<br>
+      * Aplicativo desenvolvido por Evandro Magno
+    </div>
+
     <button class="btn-download" onclick="gerarCartaz()">Visualizar Cartaz</button>
   </div>
 
+  <!-- Cartaz Gerado -->
   <div id="cartazFinal" class="cartaz" style="display: none;">
     <div class="image-container">
       <img src="" class="produto-imagem" id="imgPreview">
@@ -137,7 +165,7 @@
     <div class="produto-preco" id="precoPreview"></div>
     
     <div class="footer-bar">
-      <img src="logo.png" class="logo" alt="Logo" style="filter: none;">
+      <img src="logo.png" class="logo" alt="Logo">
       <div class="contatos">
         <p><i class="fab fa-whatsapp"></i>(98) 99601-2664</p>
         <p><i class="fab fa-instagram"></i>@lojasnordestina</p>
@@ -155,13 +183,32 @@
 
     async function gerarCartaz() {
       try {
-        // Verificar campos
         const file = document.getElementById('upload').files[0];
-        const nome = document.getElementById('nomeProduto').value;
+        const nome = document.getElementById('nomeProduto').value.trim();
         
         if(!file || !nome) {
           alert('Por favor:\n1. Selecione uma imagem\n2. Digite o nome do produto');
           return;
+        }
+
+        // Processar preço
+        let precoFormatado = '';
+        const precoInput = document.getElementById('precoProduto').value;
+        if(precoInput) {
+          const valorNumerico = parseFloat(
+            precoInput
+              .replace(/\./g, '')
+              .replace(',', '.')
+          );
+          
+          if(isNaN(valorNumerico)) {
+            throw new Error('Formato de preço inválido');
+          }
+
+          precoFormatado = valorNumerico.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+          });
         }
 
         // Carregar imagem
@@ -178,11 +225,7 @@
         // Atualizar preview
         document.getElementById('imgPreview').src = img.src;
         document.getElementById('nomePreview').textContent = nome.toUpperCase();
-        
-        const preco = document.getElementById('precoProduto').value;
-        document.getElementById('precoPreview').textContent = preco 
-          ? `R$ ${parseFloat(preco).toFixed(2).replace('.', ',')}`
-          : '';
+        document.getElementById('precoPreview').textContent = precoFormatado;
 
         // Mostrar elementos
         document.getElementById('cartazFinal').style.display = 'block';
@@ -195,7 +238,7 @@
         });
 
       } catch (error) {
-        alert('Erro ao gerar cartaz: ' + error.message);
+        alert('Erro: ' + error.message + '\nUse formato: 1.199,99 ou 99,90');
       }
     }
 
@@ -206,23 +249,20 @@
       }
 
       try {
-        // Esconder botão temporariamente
         document.getElementById('btnDownload').style.display = 'none';
         
-        // Gerar imagem
         const canvas = await html2canvas(document.getElementById('cartazFinal'), {
           scale: 2,
           useCORS: true,
-          logging: false
+          logging: false,
+          backgroundColor: null
         });
 
-        // Criar link de download
         const link = document.createElement('a');
-        link.download = `cartaz-${Date.now()}.png`;
+        link.download = `flyer-${Date.now()}.png`;
         link.href = canvas.toDataURL('image/png', 1.0);
         link.click();
 
-        // Mostrar botão novamente
         document.getElementById('btnDownload').style.display = 'block';
         
       } catch (error) {
