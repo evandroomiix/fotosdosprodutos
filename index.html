@@ -8,10 +8,8 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f5f5;
-      margin: 0;
-      padding: 20px;
-      min-height: 100vh;
+      background-color: #f0f0f0;
+      margin: 20px;
     }
 
     .input-section {
@@ -19,7 +17,7 @@
       margin: 20px auto;
       padding: 25px;
       background: white;
-      border-radius: 12px;
+      border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
@@ -28,147 +26,119 @@
       margin: 30px auto;
       padding: 25px;
       background: white;
-      border-radius: 12px;
+      border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      position: relative;
-      overflow: hidden;
     }
 
     .image-container {
       width: 100%;
       height: 400px;
+      background: #f8f8f8;
+      border-radius: 8px;
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #f8f8f8;
-      border-radius: 8px;
-      margin-bottom: 20px;
     }
 
     .produto-imagem {
-      max-width: 100%;
-      max-height: 100%;
+      max-width: 90%;
+      max-height: 90%;
       object-fit: contain;
-      padding: 10px;
     }
 
     .produto-nome {
       font-size: 24px;
-      font-weight: 800;
-      color: #2d2d2d;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
       text-transform: uppercase;
       margin: 15px 0;
-      text-align: center;
-      line-height: 1.3;
-      padding: 0 15px;
     }
 
     .produto-preco {
       font-size: 22px;
-      font-weight: 700;
       color: #2e7d32;
+      font-weight: bold;
       text-align: center;
       margin: 20px 0;
     }
 
     .footer-bar {
-      background-color: #2e7d32;
+      background: #2e7d32;
       padding: 15px;
       border-radius: 8px;
-      margin: 25px 0;
+      margin-top: 25px;
       display: flex;
-      justify-content: flex-end;
       align-items: center;
-      gap: 20px;
+      justify-content: space-between;
     }
 
     .logo {
       width: 120px;
-      height: auto;
       filter: brightness(0) invert(1);
     }
 
     .contatos {
-      text-align: left;
-      font-size: 14px;
       color: white;
+      font-size: 14px;
       line-height: 1.6;
     }
 
     .contatos i {
-      width: 20px;
-      text-align: center;
       margin-right: 8px;
+      width: 20px;
     }
 
     .btn-download {
-      display: block;
-      width: 200px;
-      margin: 20px auto;
-      padding: 12px;
       background: #2e7d32;
       color: white;
       border: none;
-      border-radius: 6px;
-      font-weight: 600;
+      padding: 12px 25px;
+      border-radius: 5px;
+      font-size: 16px;
       cursor: pointer;
-      transition: all 0.3s;
+      display: block;
+      margin: 20px auto;
+      transition: 0.3s;
     }
 
     .btn-download:hover {
       background: #1b5e20;
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     input[type="file"], input[type="text"] {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       margin: 10px 0;
       border: 2px solid #ddd;
-      border-radius: 6px;
+      border-radius: 5px;
       font-size: 16px;
-      transition: border-color 0.3s;
-    }
-
-    .avisos {
-      color: #777;
-      font-size: 13px;
-      margin-top: 15px;
-      text-align: center;
     }
   </style>
 </head>
 <body>
   <div class="input-section">
-    <h2 style="color: #2e7d32; text-align: center; margin-bottom: 25px;">Criar Cartaz</h2>
+    <h2 style="color: #2e7d32; text-align: center">Criador de Cartaz</h2>
     
-    <label>
-      Selecione a imagem do produto:
-      <input type="file" id="upload" accept="image/*" required>
-    </label>
-
-    <input type="text" id="nomeProduto" placeholder="Nome do Produto *" required>
+    <input type="file" id="upload" accept="image/*" required>
+    <input type="text" id="nomeProduto" placeholder="Nome do Produto" required>
     <input type="text" id="precoProduto" placeholder="Preço (opcional) Ex: 99.90">
-
-    <div class="avisos">
-      * Use imagens quadradas para melhor resultado
-      <br>* Tamanho máximo recomendado: 2000x2000px
-    </div>
-
-    <button onclick="gerarCartaz()" class="btn-download">Visualizar Cartaz</button>
+    
+    <button class="btn-download" onclick="gerarCartaz()">Visualizar Cartaz</button>
   </div>
 
   <div id="cartazFinal" class="cartaz" style="display: none;">
     <div class="image-container">
-      <img src="" class="produto-imagem" id="imgPreview" alt="Produto">
+      <img src="" class="produto-imagem" id="imgPreview">
     </div>
     
     <div class="produto-nome" id="nomePreview"></div>
     <div class="produto-preco" id="precoPreview"></div>
-
+    
     <div class="footer-bar">
-      <img src="logo.png" class="logo" alt="Logo Lojas Nordestina">
+      <img src="logo.png" class="logo" alt="Logo">
       <div class="contatos">
         <p><i class="fab fa-whatsapp"></i>(98) 99601-2664</p>
         <p><i class="fab fa-instagram"></i>@lojasnordestina</p>
@@ -178,54 +148,24 @@
     </div>
   </div>
 
-  <button onclick="baixarCartaz()" class="btn-download" style="margin: 20px auto; display: none;" id="btnDownload">Baixar Cartaz</button>
+  <button class="btn-download" onclick="baixarCartaz()" id="btnDownload" style="display: none">Baixar Cartaz</button>
 
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script>
     let imageLoaded = false;
 
-    async function redimensionarImagem(img) {
-      return new Promise((resolve) => {
-        const canvas = document.createElement('canvas');
-        const container = document.querySelector('.image-container');
-        canvas.width = container.offsetWidth;
-        canvas.height = container.offsetHeight;
-        
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#f8f8f8';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        const ratio = Math.min(
-          (canvas.width - 20) / img.width, 
-          (canvas.height - 20) / img.height
-        );
-        
-        const newWidth = img.width * ratio;
-        const newHeight = img.height * ratio;
-        
-        ctx.drawImage(
-          img,
-          (canvas.width - newWidth)/2,
-          (canvas.height - newHeight)/2,
-          newWidth,
-          newHeight
-        );
-        
-        const novaImg = new Image();
-        novaImg.onload = () => resolve(novaImg);
-        novaImg.src = canvas.toDataURL('image/png', 0.95);
-      });
-    }
-
     async function gerarCartaz() {
       try {
+        // Verificar campos
         const file = document.getElementById('upload').files[0];
-        const nome = document.getElementById('nomeProduto').value.trim();
-        if (!file || !nome) {
-          alert('Preencha todos os campos obrigatórios!');
+        const nome = document.getElementById('nomeProduto').value;
+        
+        if(!file || !nome) {
+          alert('Por favor:\n1. Selecione uma imagem\n2. Digite o nome do produto');
           return;
         }
 
+        // Carregar imagem
         const reader = new FileReader();
         const img = await new Promise((resolve) => {
           reader.onload = (e) => {
@@ -236,9 +176,8 @@
           reader.readAsDataURL(file);
         });
 
-        const imgProcessada = await redimensionarImagem(img);
-        
-        document.getElementById('imgPreview').src = imgProcessada.src;
+        // Atualizar preview
+        document.getElementById('imgPreview').src = img.src;
         document.getElementById('nomePreview').textContent = nome.toUpperCase();
         
         const preco = document.getElementById('precoProduto').value;
@@ -246,10 +185,15 @@
           ? `R$ ${parseFloat(preco).toFixed(2).replace('.', ',')}`
           : '';
 
+        // Mostrar elementos
         document.getElementById('cartazFinal').style.display = 'block';
         document.getElementById('btnDownload').style.display = 'block';
         imageLoaded = true;
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth'
+        });
 
       } catch (error) {
         alert('Erro ao gerar cartaz: ' + error.message);
@@ -257,29 +201,31 @@
     }
 
     async function baixarCartaz() {
-      if (!imageLoaded) {
-        alert('Gere o cartaz primeiro!');
+      if(!imageLoaded) {
+        alert('Primeiro gere o cartaz!');
         return;
       }
 
       try {
-        // Esconder botão antes de capturar
+        // Esconder botão temporariamente
         document.getElementById('btnDownload').style.display = 'none';
         
+        // Gerar imagem
         const canvas = await html2canvas(document.getElementById('cartazFinal'), {
           scale: 2,
           useCORS: true,
-          logging: false,
-          backgroundColor: null
+          logging: false
         });
 
+        // Criar link de download
         const link = document.createElement('a');
-        link.download = `cartaz_${Date.now()}.png`;
+        link.download = `cartaz-${Date.now()}.png`;
         link.href = canvas.toDataURL('image/png', 1.0);
         link.click();
-        
-        // Mostrar botão novamente após download
+
+        // Mostrar botão novamente
         document.getElementById('btnDownload').style.display = 'block';
+        
       } catch (error) {
         alert('Erro ao baixar: ' + error.message);
       }
