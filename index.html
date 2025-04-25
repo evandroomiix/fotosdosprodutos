@@ -96,13 +96,23 @@
       color: #2e7d32;
       font-weight: 800;
       text-align: center;
-      margin: 40px 0;
+      margin: 40px 0 20px;
     }
 
-    /* RODAPÉ COM 2 COLUNAS */
+    /* NOVA FRASE DE PAGAMENTO */
+    .compra-info {
+      text-align: center;
+      color: #2e7d32;
+      font-size: 16px;
+      margin: 0 0 40px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* RODAPÉ AJUSTADO */
     .footer-bar {
       background: #2e7d32;
-      padding: 25px 40px;
+      padding: 25px 40px 25px 30px;
       border-radius: 10px;
       position: absolute;
       bottom: 40px;
@@ -110,16 +120,17 @@
       right: 40px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 30px;
     }
 
     .logo {
-      width: 160px;
+      width: 140px;
+      margin-right: 20px;
     }
 
     .contatos {
       display: flex;
-      gap: 40px;
+      gap: 30px;
       width: 100%;
       color: white;
       font-size: 20px;
@@ -128,6 +139,7 @@
     .coluna {
       flex: 1;
       line-height: 1.6;
+      padding-left: 15px;
     }
 
     .telefone {
@@ -209,7 +221,8 @@
     
     <div class="produto-nome" id="nomePreview"></div>
     <div class="produto-preco" id="precoPreview"></div>
-    
+    <div class="compra-info">COMPRE NO CARNÊ OU NO CARTÃO DE CRÉDITO</div>
+
     <div class="footer-bar">
       <img src="logo.png" class="logo" alt="Logo">
       <div class="contatos">
