@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Criador de Cartazes - Lojas Nordestina</title>
   <style>
+    /* Mantive seu estilo original e adicionei melhorias */
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f3f3f3;
       margin: 0;
       padding: 1rem;
+      min-height: 100vh;
     }
+
     .cartaz {
       width: 512px;
       margin: auto;
@@ -22,6 +25,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       position: relative;
     }
+
     .produto-imagem {
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -29,28 +33,38 @@
       background-color: white;
       border: 2px solid #ccc;
       border-radius: 0.5rem;
+      padding: 5px;
     }
+
     .produto-nome {
       font-size: 1.5rem;
       font-weight: bold;
       margin: 1rem 0 0.5rem;
       color: #1b5e20;
+      min-height: 2rem;
     }
+
     .produto-preco {
       font-size: 1.25rem;
       font-weight: bold;
       color: #c62828;
       margin-bottom: 1rem;
     }
+
     .rodape {
       font-size: 0.9rem;
       color: #444;
       margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid #ddd;
     }
+
     .logo {
       width: 150px;
-      margin-bottom: 1rem;
+      margin: 1rem auto;
+      display: block;
     }
+
     .btn-download {
       margin-top: 1rem;
       padding: 0.5rem 1rem;
@@ -60,72 +74,156 @@
       border-radius: 0.5rem;
       font-weight: bold;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
+
+    .btn-download:hover {
+      background-color: #1b5e20;
+    }
+
     .input-section {
       margin: 2rem auto;
       text-align: center;
       max-width: 512px;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+
     input[type="file"], input[type="text"] {
       display: block;
       margin: 0.5rem auto;
       width: 100%;
       padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 0.25rem;
+    }
+
+    .avisos {
+      color: #666;
+      font-size: 0.8rem;
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
   <div class="input-section">
-    <h2>Criar Cartaz</h2>
-    <input type="file" id="upload" accept="image/*">
-    <input type="text" id="nomeProduto" placeholder="Nome do Produto">
-    <input type="text" id="precoProduto" placeholder="Preço do Produto (opcional)">
-    <button onclick="gerarCartaz()" class="btn-download">Gerar Cartaz</button>
-    <button onclick="baixarCartaz()" class="btn-download">Baixar Cartaz</button>
+    <h2 style="color: #2e7d32; margin-bottom: 1rem;">Criar Cartaz</h2>
+    
+    <label for="upload" style="display: block; margin: 1rem 0;">
+      Selecione a imagem do produto:
+      <input type="file" id="upload" accept="image/*" required>
+    </label>
+
+    <input type="text" id="nomeProduto" placeholder="Nome do Produto *" required>
+    <input type="text" id="precoProduto" placeholder="Preço do Produto (opcional) Ex: 99.90">
+    
+    <div class="avisos">
+      * Campos obrigatórios<br>
+      Use imagem quadrada para melhor resultado
+    </div>
+
+    <button onclick="gerarCartaz()" class="btn-download">Visualizar Cartaz</button>
   </div>
 
   <div id="cartazFinal" class="cartaz" style="display:none">
     <img src="" alt="Imagem Produto" class="produto-imagem" id="imgPreview">
     <div class="produto-nome" id="nomePreview"></div>
     <div class="produto-preco" id="precoPreview"></div>
-    <img src="cLOGO EM 3D C4D OK00001_0000~1.png" class="logo" alt="Logo">
+    <img src="cLOGO EM 3D C4D OK00001_0000~1.png" class="logo" alt="Logo Lojas Nordestina">
     <div class="rodape">
       <p>Tel: (98) 99601-2664</p>
       <p>@lojasnordestina | www.lojasnordestina.com.br</p>
       <p><em>Onde o importante é você!</em></p>
     </div>
+    <button onclick="baixarCartaz()" class="btn-download" style="margin-top: 1.5rem;">Baixar Cartaz</button>
   </div>
 
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script>
-    function gerarCartaz() {
+    let imageLoaded = false;
+
+    function validarCampos() {
+      const nome = document.getElementById('nomeProduto').value;
+      const file = document.getElementById('upload').files[0];
+      
+      if (!file || !nome) {
+        alert('Por favor, preencha todos os campos obrigatórios!');
+        return false;
+      }
+      return true;
+    }
+
+    function carregarImagem(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = reject;
+          img.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function gerarCartaz() {
+      if (!validarCampos()) return;
+
       const file = document.getElementById('upload').files[0];
       const nome = document.getElementById('nomeProduto').value;
       const preco = document.getElementById('precoProduto').value;
 
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          document.getElementById('imgPreview').src = e.target.result;
-        }
-        reader.readAsDataURL(file);
-      }
+      try {
+        const img = await carregarImagem(file);
+        document.getElementById('imgPreview').src = img.src;
+        imageLoaded = true;
 
-      document.getElementById('nomePreview').textContent = nome;
-      document.getElementById('precoPreview').textContent = preco ? `R$ ${preco}` : '';
-      document.getElementById('cartazFinal').style.display = 'block';
+        document.getElementById('nomePreview').textContent = nome;
+        document.getElementById('precoPreview').textContent = preco ? `R$ ${parseFloat(preco).toFixed(2).replace('.', ',')}` : '';
+        
+        document.getElementById('cartazFinal').style.display = 'block';
+        window.scrollTo({
+          top: document.getElementById('cartazFinal').offsetTop,
+          behavior: 'smooth'
+        });
+      } catch (error) {
+        alert('Erro ao carregar a imagem!');
+      }
     }
 
-    function baixarCartaz() {
-      const node = document.getElementById('cartazFinal');
-      html2canvas(node).then(canvas => {
+    function formatarNomeArquivo(nome) {
+      return nome.toLowerCase()
+        .replace(/\s+/g, '_')
+        .replace(/[^a-z0-9_]/gi, '')
+        .substring(0, 30);
+    }
+
+    async function baixarCartaz() {
+      if (!imageLoaded) {
+        alert('Gere o cartaz primeiro antes de baixar!');
+        return;
+      }
+
+      try {
+        const node = document.getElementById('cartazFinal');
+        const nomeProduto = formatarNomeArquivo(document.getElementById('nomeProduto').value);
+        
+        const canvas = await html2canvas(node, {
+          scale: 2,
+          useCORS: true,
+          logging: true
+        });
+
         const link = document.createElement('a');
-        link.download = 'cartaz_lojasnordestina.png';
-        link.href = canvas.toDataURL();
+        link.download = `cartaz_${nomeProduto || 'lojasnordestina'}_${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png', 1.0);
         link.click();
-      });
+      } catch (error) {
+        alert('Erro ao gerar o cartaz: ' + error.message);
+      }
     }
   </script>
 </body>
 </html>
-
