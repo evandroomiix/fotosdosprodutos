@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Criador de Cartazes - Lojas Nordestina</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -63,25 +64,22 @@
     }
 
     .produto-preco {
-      display: inline-block;
       font-size: 22px;
       font-weight: 700;
-      color: white;
-      background: #2e7d32;
-      padding: 8px 25px;
-      border-radius: 6px;
+      color: #2e7d32;
+      text-align: center;
       margin: 20px 0;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     .footer-bar {
       background-color: #2e7d32;
       padding: 15px;
-      border-radius: 0 0 8px 8px;
-      margin: 25px -25px -25px;
+      border-radius: 8px;
+      margin: 25px 0;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
+      gap: 20px;
     }
 
     .logo {
@@ -91,10 +89,16 @@
     }
 
     .contatos {
-      text-align: right;
+      text-align: left;
       font-size: 14px;
       color: white;
-      line-height: 1.4;
+      line-height: 1.6;
+    }
+
+    .contatos i {
+      width: 20px;
+      text-align: center;
+      margin-right: 8px;
     }
 
     .btn-download {
@@ -109,8 +113,6 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
-      position: relative;
-      z-index: 2;
     }
 
     .btn-download:hover {
@@ -129,24 +131,11 @@
       transition: border-color 0.3s;
     }
 
-    input[type="file"]:focus,
-    input[type="text"]:focus {
-      border-color: #2e7d32;
-      outline: none;
-    }
-
     .avisos {
       color: #777;
       font-size: 13px;
       margin-top: 15px;
       text-align: center;
-    }
-
-    .decorative-line {
-      height: 4px;
-      background-color: #2e7d32;
-      margin: 20px 0;
-      border-radius: 2px;
     }
   </style>
 </head>
@@ -176,43 +165,51 @@
     </div>
     
     <div class="produto-nome" id="nomePreview"></div>
-    <div class="decorative-line"></div>
     <div class="produto-preco" id="precoPreview"></div>
 
     <div class="footer-bar">
       <img src="logo.png" class="logo" alt="Logo Lojas Nordestina">
       <div class="contatos">
-        <p>Tel: (98) 99601-2664</p>
-        <p>@lojasnordestina</p>
-        <p>www.lojasnordestina.com.br</p>
+        <p><i class="fab fa-whatsapp"></i>(98) 99601-2664</p>
+        <p><i class="fab fa-instagram"></i>@lojasnordestina</p>
+        <p><i class="fab fa-facebook"></i>/lojasnordestina</p>
+        <p><i class="fas fa-globe"></i>www.lojasnordestina.com.br</p>
       </div>
     </div>
-
-    <button onclick="baixarCartaz()" class="btn-download">Baixar Cartaz</button>
   </div>
+
+  <button onclick="baixarCartaz()" class="btn-download" style="margin: 20px auto; display: none;" id="btnDownload">Baixar Cartaz</button>
 
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script>
     let imageLoaded = false;
 
-    function redimensionarImagem(img, maxWidth = 800, maxHeight = 800) {
+    async function redimensionarImagem(img) {
       return new Promise((resolve) => {
         const canvas = document.createElement('canvas');
-        let width = img.width;
-        let height = img.height;
-        const ratio = Math.min(maxWidth/width, maxHeight/height);
+        const container = document.querySelector('.image-container');
+        canvas.width = container.offsetWidth;
+        canvas.height = container.offsetHeight;
         
-        if(ratio < 1) {
-          width = width * ratio;
-          height = height * ratio;
-        }
-
-        canvas.width = width;
-        canvas.height = height;
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = '#f8f8f8';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, (canvas.width - img.width * ratio)/2, (canvas.height - img.height * ratio)/2, img.width * ratio, img.height * ratio);
+        
+        const ratio = Math.min(
+          (canvas.width - 20) / img.width, 
+          (canvas.height - 20) / img.height
+        );
+        
+        const newWidth = img.width * ratio;
+        const newHeight = img.height * ratio;
+        
+        ctx.drawImage(
+          img,
+          (canvas.width - newWidth)/2,
+          (canvas.height - newHeight)/2,
+          newWidth,
+          newHeight
+        );
         
         const novaImg = new Image();
         novaImg.onload = () => resolve(novaImg);
@@ -250,6 +247,7 @@
           : '';
 
         document.getElementById('cartazFinal').style.display = 'block';
+        document.getElementById('btnDownload').style.display = 'block';
         imageLoaded = true;
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 
@@ -265,20 +263,23 @@
       }
 
       try {
+        // Esconder botão antes de capturar
+        document.getElementById('btnDownload').style.display = 'none';
+        
         const canvas = await html2canvas(document.getElementById('cartazFinal'), {
           scale: 2,
           useCORS: true,
           logging: false,
-          backgroundColor: null,
-          onclone: (clonedDoc) => {
-            clonedDoc.getElementById('cartazFinal').style.boxShadow = 'none';
-          }
+          backgroundColor: null
         });
 
         const link = document.createElement('a');
         link.download = `cartaz_${Date.now()}.png`;
         link.href = canvas.toDataURL('image/png', 1.0);
         link.click();
+        
+        // Mostrar botão novamente após download
+        document.getElementById('btnDownload').style.display = 'block';
       } catch (error) {
         alert('Erro ao baixar: ' + error.message);
       }
