@@ -1,1 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criador de Cartazes - Lojas Nordestina</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f3f3f3;
+      margin: 0;
+      padding: 1rem;
+    }
+    .cartaz {
+      width: 512px;
+      margin: auto;
+      background-color: #e3f3e0;
+      border: 3px solid #2e7d32;
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      position: relative;
+    }
+    .produto-imagem {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      background-color: white;
+      border: 2px solid #ccc;
+      border-radius: 0.5rem;
+    }
+    .produto-nome {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 1rem 0 0.5rem;
+      color: #1b5e20;
+    }
+    .produto-preco {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #c62828;
+      margin-bottom: 1rem;
+    }
+    .rodape {
+      font-size: 0.9rem;
+      color: #444;
+      margin-top: 1.5rem;
+    }
+    .logo {
+      width: 150px;
+      margin-bottom: 1rem;
+    }
+    .btn-download {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .input-section {
+      margin: 2rem auto;
+      text-align: center;
+      max-width: 512px;
+    }
+    input[type="file"], input[type="text"] {
+      display: block;
+      margin: 0.5rem auto;
+      width: 100%;
+      padding: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="input-section">
+    <h2>Criar Cartaz</h2>
+    <input type="file" id="upload" accept="image/*">
+    <input type="text" id="nomeProduto" placeholder="Nome do Produto">
+    <input type="text" id="precoProduto" placeholder="Preço do Produto (opcional)">
+    <button onclick="gerarCartaz()" class="btn-download">Gerar Cartaz</button>
+    <button onclick="baixarCartaz()" class="btn-download">Baixar Cartaz</button>
+  </div>
+
+  <div id="cartazFinal" class="cartaz" style="display:none">
+    <img src="" alt="Imagem Produto" class="produto-imagem" id="imgPreview">
+    <div class="produto-nome" id="nomePreview"></div>
+    <div class="produto-preco" id="precoPreview"></div>
+    <img src="cLOGO EM 3D C4D OK00001_0000~1.png" class="logo" alt="Logo">
+    <div class="rodape">
+      <p>Tel: (98) 99601-2664</p>
+      <p>@lojasnordestina | www.lojasnordestina.com.br</p>
+      <p><em>Onde o importante é você!</em></p>
+    </div>
+  </div>
+
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script>
+    function gerarCartaz() {
+      const file = document.getElementById('upload').files[0];
+      const nome = document.getElementById('nomeProduto').value;
+      const preco = document.getElementById('precoProduto').value;
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('imgPreview').src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+      }
+
+      document.getElementById('nomePreview').textContent = nome;
+      document.getElementById('precoPreview').textContent = preco ? `R$ ${preco}` : '';
+      document.getElementById('cartazFinal').style.display = 'block';
+    }
+
+    function baixarCartaz() {
+      const node = document.getElementById('cartazFinal');
+      html2canvas(node).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'cartaz_lojasnordestina.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>
 
