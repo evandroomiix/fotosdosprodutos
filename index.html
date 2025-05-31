@@ -6,60 +6,154 @@
   <title>Criador de Flyer Produtos</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f0f0;
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 20px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      padding: 0;
     }
 
-    /* PRIMEIRA TELA */
-    .input-section {
-      width: 100%;
-      max-width: 600px;
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 0;
       background: white;
-      padding: 30px;
       border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      margin: 20px 0;
-      position: relative;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
     }
 
     .logo-topo {
+      width: 220px;
+      margin: 0 auto 15px;
+    }
+
+    h1 {
+      color: #2e7d32;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    /* Seção de entrada */
+    .input-section {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    label {
       display: block;
-      width: 200px;
-      margin: 0 auto 25px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #e0e6ed;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: #2e7d32;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .checkbox-group input {
+      width: auto;
     }
 
     .avisos {
-      text-align: center;
-      color: #666;
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 25px 0;
       font-size: 14px;
-      margin: 25px 0 30px;
+      color: #555;
+      border-left: 4px solid #2e7d32;
     }
 
     .credito {
       text-align: center;
       font-weight: 500;
-      margin-top: 40px;
+      margin-top: 30px;
       padding-top: 20px;
-      border-top: 1px solid #ddd;
+      border-top: 1px solid #eee;
+      color: #666;
     }
 
-    /* CARTAZ 1080x1350 */
+    .btn {
+      display: inline-block;
+      background: #2e7d32;
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      background: #1b5e20;
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Cartaz */
+    .cartaz-container {
+      display: none;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
     .cartaz {
       width: 1080px;
       height: 1350px;
       background: white;
-      margin: 30px auto;
+      margin: 0 auto;
       padding: 40px;
       box-sizing: border-box;
       position: relative;
-      display: none;
+      border: 1px solid #eee;
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
     }
 
     .image-container {
@@ -84,35 +178,53 @@
     .produto-nome {
       font-size: 42px;
       font-weight: 800;
-      color: #2e7d32; /* ALTEREI A COR PARA VERDE */
+      color: #2e7d32;
       text-align: center;
       text-transform: uppercase;
       margin: 30px 0;
       line-height: 1.2;
+      letter-spacing: 1px;
+    }
+
+    .price-container {
+      text-align: center;
+      margin-bottom: 40px;
     }
 
     .produto-preco {
       font-size: 48px;
       color: #2e7d32;
       font-weight: 800;
-      text-align: center;
-      margin: 40px 0 20px;
+      margin-bottom: 15px;
     }
 
-    /* NOVA FRASE DE PAGAMENTO */
+    .parcelamento {
+      font-size: 32px;
+      color: #27ae60;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .valor-total {
+      font-size: 28px;
+      color: #7f8c8d;
+      font-weight: 600;
+    }
+
     .compra-info {
       text-align: center;
       color: #2e7d32;
-      font-size: 16px;
+      font-size: 20px;
       margin: 0 0 40px;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
-    /* RODAPÉ AJUSTADO */
+    /* Rodapé */
     .footer-bar {
       background: #2e7d32;
-      padding: 25px 40px 25px 30px;
+      padding: 25px 40px;
       border-radius: 10px;
       position: absolute;
       bottom: 40px;
@@ -153,97 +265,174 @@
       text-align: center;
     }
 
-    /* BOTÕES */
-    .btn-download {
-      background: #2e7d32;
-      color: white;
-      border: none;
-      padding: 18px 45px;
-      border-radius: 10px;
-      font-size: 20px;
-      cursor: pointer;
-      display: block;
-      margin: 30px auto;
-      transition: 0.3s;
+    /* Botão de download */
+    .download-container {
+      text-align: center;
+      margin-top: 30px;
     }
 
-    .btn-download:hover {
-      background: #1b5e20;
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    /* Responsividade */
+    @media (max-width: 1200px) {
+      .cartaz {
+        width: 100%;
+        height: auto;
+        padding: 20px;
+      }
+      
+      .image-container {
+        height: 500px;
+      }
+      
+      .footer-bar {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        margin-top: 30px;
+      }
     }
 
-    /* CAMPOS DE ENTRADA */
-    input[type="file"], input[type="text"] {
-      width: 100%;
-      padding: 15px;
-      margin: 15px 0;
-      border: 2px solid #ddd;
-      border-radius: 10px;
-      font-size: 18px;
-      transition: 0.3s;
-    }
-
-    input[type="file"]:focus,
-    input[type="text"]:focus {
-      border-color: #2e7d32;
-      outline: none;
+    @media (max-width: 768px) {
+      .input-section, .cartaz-container {
+        padding: 20px;
+      }
+      
+      .cartaz {
+        padding: 15px;
+      }
+      
+      .produto-nome {
+        font-size: 32px;
+      }
+      
+      .produto-preco {
+        font-size: 36px;
+      }
+      
+      .parcelamento {
+        font-size: 24px;
+      }
+      
+      .valor-total {
+        font-size: 20px;
+      }
+      
+      .contatos {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .footer-bar {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .logo {
+        margin: 0 auto 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- PRIMEIRA TELA -->
-  <div class="input-section">
-    <img src="logo.png" class="logo-topo" alt="Logo">
-    
-    <h2 style="color: #2e7d32; text-align: center; margin: 0 0 30px 0;">
-      CRIADOR DE FLYER PRODUTOS
-    </h2>
+  <div class="container">
+    <header>
+      <img src="https://via.placeholder.com/220x80/2e7d32/ffffff?text=LOGO" class="logo-topo" alt="Logo">
+      <h1>CRIADOR DE FLYER PRODUTOS</h1>
+      <p>Crie flyers profissionais em minutos</p>
+    </header>
 
-    <input type="file" id="upload" accept="image/*" required>
-    <input type="text" id="nomeProduto" placeholder="Nome do Produto" required>
-    <input type="text" id="precoProduto" placeholder="Preço (opcional) Ex: 1.199,99">
-
-    <div class="avisos">
-      * Adicione fotos com boa qualidade e sem borrados<br>
-      * Tamanho máximo das imagens: 5MB
+    <!-- Seção de entrada -->
+    <div class="input-section">
+      <div class="input-group">
+        <label for="nomeProduto">Nome do Produto *</label>
+        <input type="text" id="nomeProduto" placeholder="Ex: Smartphone Galaxy S21" required>
+      </div>
+      
+      <div class="input-group">
+        <label for="upload">Imagem do Produto *</label>
+        <input type="file" id="upload" accept="image/*" required>
+      </div>
+      
+      <div class="input-group">
+        <label for="precoProduto">Valor do Produto (opcional)</label>
+        <input type="text" id="precoProduto" placeholder="Ex: 1.199,99">
+      </div>
+      
+      <div class="input-group">
+        <label for="parcelas">Parcelamento (opcional)</label>
+        <select id="parcelas">
+          <option value="">Selecione as parcelas...</option>
+          <option value="1">1x (À vista)</option>
+          <option value="2">2x</option>
+          <option value="3">3x</option>
+          <option value="4">4x</option>
+          <option value="5">5x</option>
+          <option value="6">6x</option>
+          <option value="10">10x</option>
+          <option value="12">12x</option>
+        </select>
+      </div>
+      
+      <div class="checkbox-group">
+        <input type="checkbox" id="exibirTotal" checked>
+        <label for="exibirTotal">Exibir valor total no flyer</label>
+      </div>
+      
+      <div class="avisos">
+        <strong>Instruções importantes:</strong>
+        <ul>
+          <li>Adicione fotos com boa qualidade e sem borrados</li>
+          <li>Tamanho máximo das imagens: 5MB</li>
+          <li>Para valores, use o formato 1.199,99 ou 1999.99</li>
+        </ul>
+      </div>
+      
+      <button class="btn" onclick="gerarCartaz()">Visualizar Cartaz</button>
+      
       <div class="credito">Aplicativo desenvolvido por Evandro Magno</div>
     </div>
 
-    <button class="btn-download" onclick="gerarCartaz()">Visualizar Cartaz</button>
-  </div>
-
-  <!-- CARTAZ -->
-  <div id="cartazFinal" class="cartaz">
-    <div class="image-container">
-      <img src="" class="produto-imagem" id="imgPreview">
-    </div>
-    
-    <div class="produto-nome" id="nomePreview"></div>
-    <div class="produto-preco" id="precoPreview"></div>
-    <div class="compra-info">COMPRE NO CARNÊ OU NO CARTÃO DE CRÉDITO</div>
-
-    <div class="footer-bar">
-      <img src="logo.png" class="logo" alt="Logo">
-      <div class="contatos">
-        <div class="coluna">
-          <p class="telefone"><i class="fab fa-whatsapp"></i><strong>(98) 99601-2664</strong></p>
-          <p><i class="fas fa-globe"></i>www.lojasnordestina.com.br</p>
+    <!-- Cartaz Preview -->
+    <div class="cartaz-container" id="cartazContainer">
+      <div class="cartaz" id="cartazFinal">
+        <div class="image-container">
+          <img src="" class="produto-imagem" id="imgPreview">
         </div>
-        <div class="coluna">
-          <p><i class="fab fa-instagram"></i>@lojasnordestina</p>
-          <p><i class="fab fa-facebook"></i>/lojasnordestina</p>
+        
+        <div class="produto-nome" id="nomePreview"></div>
+        
+        <div class="price-container" id="priceContainer">
+          <!-- Preço e parcelas serão inseridos aqui -->
         </div>
+        
+        <div class="compra-info">COMPRE NO CARNÊ OU NO CARTÃO DE CRÉDITO</div>
+
+        <div class="footer-bar">
+          <img src="https://via.placeholder.com/140x60/ffffff/2e7d32?text=LOGO" class="logo" alt="Logo">
+          <div class="contatos">
+            <div class="coluna">
+              <p class="telefone"><i class="fab fa-whatsapp"></i><strong>(98) 99601-2664</strong></p>
+              <p><i class="fas fa-globe"></i>www.lojasnordestina.com.br</p>
+            </div>
+            <div class="coluna">
+              <p><i class="fab fa-instagram"></i>@lojasnordestina</p>
+              <p><i class="fab fa-facebook"></i>/lojasnordestina</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="download-container">
+        <button class="btn" onclick="baixarCartaz()" id="btnDownload">Baixar Cartaz</button>
       </div>
     </div>
   </div>
 
-  <button class="btn-download" onclick="baixarCartaz()" id="btnDownload" style="display: none">Baixar Cartaz</button>
-
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script>
     let imageLoaded = false;
-
+    
+    // Função para formatar valores em Reais
     function formatarPreco(valor) {
       return valor.toLocaleString('pt-BR', {
         style: 'currency',
@@ -253,33 +442,48 @@
       });
     }
 
+    // Função para calcular parcelamento
+    function calcularParcelas() {
+      const inputPreco = document.getElementById('precoProduto').value;
+      const parcelas = parseInt(document.getElementById('parcelas').value);
+      const exibirTotal = document.getElementById('exibirTotal').checked;
+      
+      if (!inputPreco || !parcelas) return null;
+      
+      try {
+        const valorNumerico = Number(
+          inputPreco
+            .replace(/\./g, '')
+            .replace(',', '.')
+        );
+        
+        if (isNaN(valorNumerico)) return null;
+        
+        const valorParcela = valorNumerico / parcelas;
+        return {
+          parcelas,
+          valorParcela: formatarPreco(valorParcela),
+          valorTotal: formatarPreco(valorNumerico),
+          exibirTotal
+        };
+      } catch (error) {
+        console.error('Erro ao calcular parcelas:', error);
+        return null;
+      }
+    }
+
+    // Função para gerar o cartaz
     async function gerarCartaz() {
       try {
         const file = document.getElementById('upload').files[0];
         const nome = document.getElementById('nomeProduto').value.trim();
         
-        if(!file || !nome) {
-          alert('Preencha todos os campos obrigatórios!');
+        if (!file || !nome) {
+          alert('Por favor, preencha o nome do produto e selecione uma imagem!');
           return;
         }
 
-        // Processar preço
-        let preco = '';
-        const inputPreco = document.getElementById('precoProduto').value;
-        if(inputPreco) {
-          const valorNumerico = Number(
-            inputPreco
-              .replace(/\./g, '')
-              .replace(',', '.')
-          );
-          
-          if(isNaN(valorNumerico)) {
-            throw new Error('Formato inválido');
-          }
-          preco = formatarPreco(valorNumerico);
-        }
-
-        // Carregar imagem
+        // Processar imagem
         const reader = new FileReader();
         const img = await new Promise((resolve, reject) => {
           reader.onload = (e) => {
@@ -291,35 +495,80 @@
           reader.readAsDataURL(file);
         });
 
-        // Atualizar preview
+        // Atualizar preview da imagem
         document.getElementById('imgPreview').src = img.src;
+        
+        // Atualizar nome do produto
         document.getElementById('nomePreview').textContent = nome.toUpperCase();
-        document.getElementById('precoPreview').textContent = preco;
+        
+        // Processar informações de preço
+        const priceContainer = document.getElementById('priceContainer');
+        const parcelamento = calcularParcelas();
+        const inputPreco = document.getElementById('precoProduto').value;
+        
+        priceContainer.innerHTML = '';
+        
+        if (parcelamento) {
+          // Exibir parcelamento
+          const parcelasHtml = `
+            <div class="parcelamento">Até ${parcelamento.parcelas}x de ${parcelamento.valorParcela}</div>
+          `;
+          priceContainer.innerHTML += parcelasHtml;
+          
+          // Exibir valor total se necessário
+          if (parcelamento.exibirTotal) {
+            priceContainer.innerHTML += `
+              <div class="valor-total">Total: ${parcelamento.valorTotal}</div>
+            `;
+          }
+        } else if (inputPreco) {
+          // Exibir apenas o valor total
+          try {
+            const valorNumerico = Number(
+              inputPreco
+                .replace(/\./g, '')
+                .replace(',', '.')
+            );
+            
+            if (!isNaN(valorNumerico)) {
+              priceContainer.innerHTML = `
+                <div class="produto-preco">${formatarPreco(valorNumerico)}</div>
+              `;
+            }
+          } catch (error) {
+            console.error('Erro ao formatar preço:', error);
+          }
+        }
 
-        // Mostrar elementos
-        document.getElementById('cartazFinal').style.display = 'block';
-        document.getElementById('btnDownload').style.display = 'block';
+        // Mostrar o cartaz
+        document.getElementById('cartazContainer').style.display = 'block';
         imageLoaded = true;
         
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: 'smooth'
+        // Rolar até o cartaz
+        document.getElementById('cartazContainer').scrollIntoView({ 
+          behavior: 'smooth' 
         });
 
       } catch (error) {
-        alert('Erro: Use números válidos (Ex: 1.199,99 ou 1,999.00)\n' + error.message);
+        alert('Erro ao gerar o cartaz: ' + error.message);
+        console.error(error);
       }
     }
 
+    // Função para baixar o cartaz
     async function baixarCartaz() {
-      if(!imageLoaded) {
-        alert('Gere o cartaz primeiro!');
+      if (!imageLoaded) {
+        alert('Por favor, gere o cartaz primeiro!');
         return;
       }
 
       try {
-        document.getElementById('btnDownload').style.display = 'none';
+        // Desabilitar o botão durante o processamento
+        const btn = document.getElementById('btnDownload');
+        btn.disabled = true;
+        btn.textContent = 'Processando...';
         
+        // Gerar imagem
         const canvas = await html2canvas(document.getElementById('cartazFinal'), {
           scale: 2,
           useCORS: true,
@@ -327,17 +576,36 @@
           backgroundColor: null
         });
 
+        // Criar link de download
         const link = document.createElement('a');
-        link.download = `flyer-${Date.now()}.png`;
+        link.download = `flyer-produto-${Date.now()}.png`;
         link.href = canvas.toDataURL('image/png', 1.0);
         link.click();
 
-        document.getElementById('btnDownload').style.display = 'block';
+        // Restaurar o botão
+        btn.disabled = false;
+        btn.textContent = 'Baixar Cartaz';
         
       } catch (error) {
-        alert('Erro ao baixar: ' + error.message);
+        alert('Erro ao baixar o cartaz: ' + error.message);
+        console.error(error);
+        
+        // Restaurar o botão em caso de erro
+        const btn = document.getElementById('btnDownload');
+        btn.disabled = false;
+        btn.textContent = 'Baixar Cartaz';
       }
     }
+    
+    // Configurar evento de mudança no campo de parcelas
+    document.getElementById('parcelas').addEventListener('change', function() {
+      if (this.value && document.getElementById('precoProduto').value) {
+        const parcelamento = calcularParcelas();
+        if (parcelamento) {
+          alert(`Parcelamento calculado: ${parcelamento.parcelas}x de ${parcelamento.valorParcela}`);
+        }
+      }
+    });
   </script>
 </body>
 </html>
