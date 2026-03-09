@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Criador de Flyer Produtos</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -13,12 +14,20 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-      color: #333;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #533483);
+      background-size: 400% 400%;
+      animation: aurora 15s ease infinite;
+      color: #fff;
       line-height: 1.6;
       padding: 20px;
       min-height: 100vh;
+    }
+
+    @keyframes aurora {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .container {
@@ -32,9 +41,12 @@
     header {
       text-align: center;
       padding: 20px 0;
-      background: white;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
       margin-bottom: 20px;
     }
 
@@ -44,17 +56,21 @@
     }
 
     h1 {
-      color: #2e7d32;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
       font-size: 2.2rem;
       margin-bottom: 10px;
     }
 
     /* Seção de entrada */
     .input-section {
-      background: white;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       padding: 30px;
       border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     }
 
     .input-group {
@@ -65,22 +81,23 @@
       display: block;
       margin-bottom: 8px;
       font-weight: 600;
-      color: #2c3e50;
+      color: #e0e0e0;
     }
 
     input, select {
       width: 100%;
       padding: 14px;
-      border: 2px solid #e0e6ed;
+      border: none;
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 10px;
       font-size: 16px;
+      color: #333;
       transition: all 0.3s;
     }
 
     input:focus, select:focus {
-      border-color: #2e7d32;
       outline: none;
-      box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
     }
 
     .checkbox-group {
@@ -95,13 +112,13 @@
     }
 
     .avisos {
-      background: #f8f9fa;
+      background: rgba(0, 0, 0, 0.2);
       padding: 20px;
       border-radius: 10px;
       margin: 25px 0;
       font-size: 14px;
-      color: #555;
-      border-left: 4px solid #2e7d32;
+      color: #ddd;
+      border-left: 4px solid #4facfe;
     }
 
     .credito {
@@ -109,13 +126,13 @@
       font-weight: 500;
       margin-top: 30px;
       padding-top: 20px;
-      border-top: 1px solid #eee;
-      color: #666;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: #ccc;
     }
 
     .btn {
       display: inline-block;
-      background: #2e7d32;
+      background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
       color: white;
       border: none;
       padding: 16px 40px;
@@ -130,18 +147,20 @@
     }
 
     .btn:hover {
-      background: #1b5e20;
       transform: translateY(-3px);
-      box-shadow: 0 7px 15px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 7px 20px rgba(0, 114, 255, 0.4);
     }
 
     /* Cartaz */
     .cartaz-container {
       display: none;
-      background: white;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       padding: 30px;
       border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     }
 
     .cartaz {
@@ -154,6 +173,7 @@
       position: relative;
       border: 1px solid #eee;
       box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+      color: #333; /* Garante que o texto do cartaz continue escuro */
     }
 
     .image-container {
@@ -406,7 +426,7 @@
         <div class="compra-info">COMPRE NO CARNÊ OU NO CARTÃO DE CRÉDITO</div>
 
         <div class="footer-bar">
-          <img src="logo.png" class="logo" alt="Logo">
+          <img src="https://via.placeholder.com/140x50/2e7d32/ffffff?text=LOGO" class="logo" alt="Logo">
           <div class="contatos">
             <div class="coluna">
               <p class="telefone"><i class="fab fa-whatsapp"></i><strong>(98) 99601-2664</strong></p>
