@@ -351,6 +351,46 @@
         margin: 0 auto 20px;
       }
     }
+
+    /* Histórico */
+    .history-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+    
+    .history-list {
+      list-style: none;
+      max-height: 200px;
+      overflow-y: auto;
+      margin-top: 15px;
+    }
+    
+    .history-item {
+      padding: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+    
+    .btn-clear {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ddd;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .btn-clear:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -410,6 +450,15 @@
       <div class="credito">Aplicativo desenvolvido por Evandro Magno</div>
     </div>
 
+    <!-- Histórico de Produtos -->
+    <div class="history-section">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3>Histórico de Produtos Criados</h3>
+        <button class="btn-clear" onclick="limparHistorico()">Limpar Histórico</button>
+      </div>
+      <ul id="listaHistorico" class="history-list"></ul>
+    </div>
+
     <!-- Cartaz Preview -->
     <div class="cartaz-container" id="cartazContainer">
       <div class="cartaz" id="cartazFinal">
@@ -449,6 +498,9 @@
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script>
     let imageLoaded = false;
+
+    // Carregar histórico ao iniciar
+    document.addEventListener('DOMContentLoaded', atualizarHistorico);
     
     // Função para formatar valores em Reais
     function formatarPreco(valor) {
@@ -518,6 +570,9 @@
         
         // Atualizar nome do produto
         document.getElementById('nomePreview').textContent = nome.toUpperCase();
+
+        // Salvar no histórico
+        salvarNoHistorico(nome);
         
         // Processar informações de preço
         const priceContainer = document.getElementById('priceContainer');
@@ -624,6 +679,43 @@
         }
       }
     });
+
+    // Funções do Histórico
+    function salvarNoHistorico(nome) {
+      let historico = JSON.parse(localStorage.getItem('historicoProdutos') || '[]');
+      const data = new Date().toLocaleDateString('pt-BR');
+      const hora = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      
+      // Adiciona no início
+      historico.unshift({ nome: nome, data: `${data} às ${hora}` });
+      
+      // Limita a 20 itens para não ficar muito grande
+      if (historico.length > 20) historico.pop();
+      
+      localStorage.setItem('historicoProdutos', JSON.stringify(historico));
+      atualizarHistorico();
+    }
+
+    function atualizarHistorico() {
+      const lista = document.getElementById('listaHistorico');
+      const historico = JSON.parse(localStorage.getItem('historicoProdutos') || '[]');
+      
+      lista.innerHTML = historico.length ? '' : '<li class="history-item">Nenhum produto registrado ainda.</li>';
+      
+      historico.forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'history-item';
+        li.innerHTML = `<span>${item.nome}</span> <span style="opacity: 0.7;">${item.data}</span>`;
+        lista.appendChild(li);
+      });
+    }
+
+    function limparHistorico() {
+      if(confirm('Deseja apagar todo o histórico?')) {
+        localStorage.removeItem('historicoProdutos');
+        atualizarHistorico();
+      }
+    }
   </script>
 </body>
 </html>
