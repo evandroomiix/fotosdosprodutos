@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Criador de Flyer Produtos</title>
+  <title>Criador de Flyer Avariados</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -38,6 +38,28 @@
       gap: 30px;
     }
 
+    .menu-topo {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .menu-topo a {
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+      transition: all 0.3s;
+      text-align: center;
+    }
+    .menu-topo a.active, .menu-topo a:hover {
+      background: #4caf50;
+      border-color: #4caf50;
+    }
+
     header {
       text-align: center;
       padding: 20px 0;
@@ -62,7 +84,6 @@
       margin-bottom: 10px;
     }
 
-    /* Seção de entrada */
     .input-section {
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
@@ -151,30 +172,6 @@
       box-shadow: 0 7px 20px rgba(46, 125, 50, 0.4);
     }
 
-    /* Menu Topo */
-    .menu-topo {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .menu-topo a {
-      padding: 10px 20px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      font-weight: 600;
-      transition: all 0.3s;
-      text-align: center;
-    }
-    .menu-topo a.active, .menu-topo a:hover {
-      background: #4caf50;
-      border-color: #4caf50;
-    }
-
-    /* Cartaz */
     .cartaz-container {
       display: none;
       background: rgba(255, 255, 255, 0.1);
@@ -184,6 +181,13 @@
       padding: 30px;
       border-radius: 15px;
       box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    .cartaz-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
     }
 
     .cartaz {
@@ -196,24 +200,30 @@
       position: relative;
       border: 1px solid #eee;
       box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
-      color: #333; /* Garante que o texto do cartaz continue escuro */
+      color: #333;
       transform-origin: top center;
     }
-
-    .cartaz-wrapper {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      overflow: hidden;
+    
+    .aviso-avaria {
+      background: #e74c3c;
+      color: white;
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+      padding: 12px;
+      margin-bottom: 25px;
+      border-radius: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     .image-container {
       width: 100%;
-      height: 650px;
+      height: 600px;
       background: white;
       border: 2px solid #eee;
       border-radius: 10px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -245,25 +255,27 @@
       text-align: center;
       margin-bottom: 40px;
     }
-
-    .produto-preco {
-      font-size: 48px;
-      color: #2e7d32;
-      font-weight: 800;
-      margin-bottom: 15px;
+    
+    .preco-de {
+      font-size: 34px;
+      color: #95a5a6;
+      text-decoration: line-through;
+      margin-bottom: 5px;
+      font-weight: 700;
     }
 
-    .parcelamento {
-      font-size: 50px;
-      color: #27ae60;
-      font-weight: 700;
+    .produto-preco.por {
+      font-size: 58px;
+      color: #e74c3c;
+      font-weight: 800;
       margin-bottom: 10px;
     }
 
-    .valor-total {
-      font-size: 28px;
-      color: #7f8c8d;
-      font-weight: 600;
+    .parcelamento {
+      font-size: 46px;
+      color: #27ae60;
+      font-weight: 700;
+      margin-bottom: 10px;
     }
 
     .compra-info {
@@ -276,7 +288,6 @@
       text-transform: uppercase;
     }
 
-    /* Rodapé */
     .footer-bar {
       background: #2e7d32;
       padding: 25px 40px;
@@ -320,84 +331,38 @@
       text-align: center;
     }
 
-    /* Botão de download */
     .download-container {
       text-align: center;
       margin-top: 30px;
     }
 
-    /* Responsividade */
-    @media (max-width: 1200px) {
-    }
-
     @media (max-width: 768px) {
-      .input-section, .cartaz-container, .history-section {
+      .input-section, .cartaz-container {
         padding: 20px;
       }
       .menu-topo {
         flex-direction: column;
       }
     }
-
-    /* Histórico */
-    .history-section {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    }
-    
-    .history-list {
-      list-style: none;
-      max-height: 200px;
-      overflow-y: auto;
-      margin-top: 15px;
-    }
-    
-    .history-item {
-      padding: 10px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-    }
-    
-    .btn-clear {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #ddd;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 12px;
-    }
-    .btn-clear:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <nav class="menu-topo">
-      <a href="index.html" class="active">Flyer Padrão</a>
-      <a href="avariados.html">Flyer Produtos Avariados</a>
+      <a href="index.html">Flyer Padrão</a>
+      <a href="avariados.html" class="active">Flyer Produtos Avariados</a>
     </nav>
 
     <header>
       <img src="logo.png" class="logo-topo" alt="Logo">
-      <h1>CRIADOR DE FLYER PRODUTOS</h1>
-      <p>SITE EXCLUSIVO PARA USO INTERNO</p>
+      <h1>FLYER PRODUTOS AVARIADOS</h1>
+      <p>PRODUTOS DE MOSTRUÁRIO COM DESCONTO</p>
     </header>
 
-    <!-- Seção de entrada -->
     <div class="input-section">
       <div class="input-group">
         <label for="nomeProduto">Nome do Produto *</label>
-        <input type="text" id="nomeProduto" placeholder="Ex: Smartphone Galaxy S21" required>
+        <input type="text" id="nomeProduto" placeholder="Ex: Geladeira (Contém Amassado)" required>
       </div>
       
       <div class="input-group">
@@ -406,8 +371,13 @@
       </div>
       
       <div class="input-group">
-        <label for="precoProduto">Valor do Produto (opcional)</label>
-        <input type="text" id="precoProduto" placeholder="Ex: 1.199,99">
+        <label for="precoDe">Valor Original (De) *</label>
+        <input type="text" id="precoDe" placeholder="Ex: 2.500,00" required>
+      </div>
+
+      <div class="input-group">
+        <label for="precoPor">Valor com Desconto (Por) *</label>
+        <input type="text" id="precoPor" placeholder="Ex: 1.899,99" required>
       </div>
       
       <div class="input-group">
@@ -423,38 +393,23 @@
         </select>
       </div>
       
-      <div class="checkbox-group">
-        <input type="checkbox" id="exibirTotal" checked>
-        <label for="exibirTotal">Exibir valor total no flyer</label>
-      </div>
-      
       <div class="avisos">
         <strong>Instruções importantes:</strong>
         <ul>
           <li>Adicione fotos com boa qualidade e sem borrados</li>
-          <li>Tamanho máximo das imagens: 5MB</li>
           <li>Para valores, use o formato 1.199,99 ou 1999.99</li>
         </ul>
       </div>
       
       <button class="btn" onclick="gerarCartaz()">Visualizar Cartaz</button>
-      
       <div class="credito">Aplicativo desenvolvido por Evandro Magno</div>
     </div>
 
-    <!-- Histórico de Produtos -->
-    <div class="history-section">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h3>Histórico de Produtos Criados</h3>
-        <button class="btn-clear" onclick="limparHistorico()">Limpar Histórico</button>
-      </div>
-      <ul id="listaHistorico" class="history-list"></ul>
-    </div>
-
-    <!-- Cartaz Preview -->
     <div class="cartaz-container" id="cartazContainer">
       <div id="cartazWrapper" class="cartaz-wrapper">
         <div class="cartaz" id="cartazFinal">
+          <div class="aviso-avaria">PRODUTO DE MOSTRUÁRIO / CONTÉM AVARIA</div>
+
           <div class="image-container">
             <img src="" class="produto-imagem" id="imgPreview">
           </div>
@@ -493,61 +448,42 @@
   <script>
     let imageLoaded = false;
 
-    // Carregar histórico ao iniciar
-    document.addEventListener('DOMContentLoaded', atualizarHistorico);
-    
-    // Função para formatar valores em Reais
     function formatarPreco(valor) {
-      return valor.toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
+      return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    // Função para calcular parcelamento
     function calcularParcelas() {
-      const inputPreco = document.getElementById('precoProduto').value;
+      const inputPreco = document.getElementById('precoPor').value;
       const parcelas = parseInt(document.getElementById('parcelas').value);
-      const exibirTotal = document.getElementById('exibirTotal').checked;
       
       if (!inputPreco || !parcelas) return null;
       
       try {
-        const valorNumerico = Number(
-          inputPreco
-            .replace(/\./g, '')
-            .replace(',', '.')
-        );
-        
+        const valorNumerico = Number(inputPreco.replace(/\./g, '').replace(',', '.'));
         if (isNaN(valorNumerico)) return null;
         
-        const valorParcela = valorNumerico / parcelas;
         return {
           parcelas,
-          valorParcela: formatarPreco(valorParcela),
-          valorTotal: formatarPreco(valorNumerico),
-          exibirTotal
+          valorParcela: formatarPreco(valorNumerico / parcelas),
+          valorTotal: formatarPreco(valorNumerico)
         };
       } catch (error) {
-        console.error('Erro ao calcular parcelas:', error);
         return null;
       }
     }
 
-    // Função para gerar o cartaz
     async function gerarCartaz() {
       try {
         const file = document.getElementById('upload').files[0];
         const nome = document.getElementById('nomeProduto').value.trim();
+        const inputDe = document.getElementById('precoDe').value.trim();
+        const inputPor = document.getElementById('precoPor').value.trim();
         
-        if (!file || !nome) {
-          alert('Por favor, preencha o nome do produto e selecione uma imagem!');
+        if (!file || !nome || !inputDe || !inputPor) {
+          alert('Por favor, preencha o nome, selecione a imagem e informe ambos os valores!');
           return;
         }
 
-        // Processar imagem
         const reader = new FileReader();
         const img = await new Promise((resolve, reject) => {
           reader.onload = (e) => {
@@ -559,163 +495,74 @@
           reader.readAsDataURL(file);
         });
 
-        // Atualizar preview da imagem
         document.getElementById('imgPreview').src = img.src;
-        
-        // Atualizar nome do produto
         document.getElementById('nomePreview').textContent = nome.toUpperCase();
-
-        // Salvar no histórico
-        salvarNoHistorico(nome);
         
-        // Processar informações de preço
         const priceContainer = document.getElementById('priceContainer');
-        const parcelamento = calcularParcelas();
-        const inputPreco = document.getElementById('precoProduto').value;
-        
         priceContainer.innerHTML = '';
+
+        let htmlPreco = '';
+
+        try {
+          const vDe = Number(inputDe.replace(/\./g, '').replace(',', '.'));
+          if (!isNaN(vDe)) htmlPreco += `<div class="preco-de">DE: ${formatarPreco(vDe)}</div>`;
+        } catch(e) {}
+
+        const parcelamento = calcularParcelas();
         
         if (parcelamento) {
-          // Exibir parcelamento
-          const parcelasHtml = `
-            <div class="parcelamento">Até ${parcelamento.parcelas}x de ${parcelamento.valorParcela}</div>
-          `;
-          priceContainer.innerHTML += parcelasHtml;
-          
-          // Exibir valor total se necessário
-          if (parcelamento.exibirTotal) {
-            priceContainer.innerHTML += `
-              <div class="valor-total">Total: ${parcelamento.valorTotal}</div>
-            `;
-          }
-        } else if (inputPreco) {
-          // Exibir apenas o valor total
+          htmlPreco += `<div class="produto-preco por">POR: ${parcelamento.valorTotal}</div>`;
+          htmlPreco += `<div class="parcelamento">Até ${parcelamento.parcelas}x de ${parcelamento.valorParcela}</div>`;
+        } else {
           try {
-            const valorNumerico = Number(
-              inputPreco
-                .replace(/\./g, '')
-                .replace(',', '.')
-            );
-            
-            if (!isNaN(valorNumerico)) {
-              priceContainer.innerHTML = `
-                <div class="produto-preco">${formatarPreco(valorNumerico)}</div>
-              `;
-            }
-          } catch (error) {
-            console.error('Erro ao formatar preço:', error);
-          }
+            const vPor = Number(inputPor.replace(/\./g, '').replace(',', '.'));
+            if (!isNaN(vPor)) htmlPreco += `<div class="produto-preco por">POR: ${formatarPreco(vPor)}</div>`;
+          } catch(e) {}
         }
+        
+        priceContainer.innerHTML = htmlPreco;
 
-        // Mostrar o cartaz
         document.getElementById('cartazContainer').style.display = 'block';
         imageLoaded = true;
         
         ajustarEscalaCartaz();
-
-        // Rolar até o cartaz
-        document.getElementById('cartazContainer').scrollIntoView({ 
-          behavior: 'smooth' 
-        });
+        document.getElementById('cartazContainer').scrollIntoView({ behavior: 'smooth' });
 
       } catch (error) {
         alert('Erro ao gerar o cartaz: ' + error.message);
-        console.error(error);
       }
     }
 
-    // Função para baixar o cartaz
     async function baixarCartaz() {
-      if (!imageLoaded) {
-        alert('Por favor, gere o cartaz primeiro!');
-        return;
-      }
-
+      if (!imageLoaded) return;
       try {
-        // Desabilitar o botão durante o processamento
         const btn = document.getElementById('btnDownload');
         btn.disabled = true;
         btn.textContent = 'Processando...';
         
         const cartaz = document.getElementById('cartazFinal');
         const originalTransform = cartaz.style.transform;
-        cartaz.style.transform = 'none'; // Garante alta resolução
-
-        // Gerar imagem
-        const canvas = await html2canvas(document.getElementById('cartazFinal'), {
+        cartaz.style.transform = 'none'; // Prepara para foto perfeita
+        
+        const canvas = await html2canvas(cartaz, {
           scale: 2,
           useCORS: true,
           logging: false,
           backgroundColor: '#ffffff'
         });
 
-        cartaz.style.transform = originalTransform; // Restaura estado visual
+        cartaz.style.transform = originalTransform;
 
-        // Criar link de download
         const link = document.createElement('a');
-        link.download = `flyer-produto-${Date.now()}.png`;
+        link.download = `flyer-avariado-${Date.now()}.png`;
         link.href = canvas.toDataURL('image/png', 1.0);
         link.click();
 
-        // Restaurar o botão
         btn.disabled = false;
         btn.textContent = 'Baixar Cartaz';
-        
       } catch (error) {
-        alert('Erro ao baixar o cartaz: ' + error.message);
-        console.error(error);
-        
-        // Restaurar o botão em caso de erro
-        const btn = document.getElementById('btnDownload');
-        btn.disabled = false;
-        btn.textContent = 'Baixar Cartaz';
-      }
-    }
-    
-    // Configurar evento de mudança no campo de parcelas
-    document.getElementById('parcelas').addEventListener('change', function() {
-      if (this.value && document.getElementById('precoProduto').value) {
-        const parcelamento = calcularParcelas();
-        if (parcelamento) {
-          alert(`Parcelamento calculado: ${parcelamento.parcelas}x de ${parcelamento.valorParcela}`);
-        }
-      }
-    });
-
-    // Funções do Histórico
-    function salvarNoHistorico(nome) {
-      let historico = JSON.parse(localStorage.getItem('historicoProdutos') || '[]');
-      const data = new Date().toLocaleDateString('pt-BR');
-      const hora = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-      
-      // Adiciona no início
-      historico.unshift({ nome: nome, data: `${data} às ${hora}` });
-      
-      // Limita a 20 itens para não ficar muito grande
-      if (historico.length > 20) historico.pop();
-      
-      localStorage.setItem('historicoProdutos', JSON.stringify(historico));
-      atualizarHistorico();
-    }
-
-    function atualizarHistorico() {
-      const lista = document.getElementById('listaHistorico');
-      const historico = JSON.parse(localStorage.getItem('historicoProdutos') || '[]');
-      
-      lista.innerHTML = historico.length ? '' : '<li class="history-item">Nenhum produto registrado ainda.</li>';
-      
-      historico.forEach(item => {
-        const li = document.createElement('li');
-        li.className = 'history-item';
-        li.innerHTML = `<span>${item.nome}</span> <span style="opacity: 0.7;">${item.data}</span>`;
-        lista.appendChild(li);
-      });
-    }
-
-    function limparHistorico() {
-      if(confirm('Deseja apagar todo o histórico?')) {
-        localStorage.removeItem('historicoProdutos');
-        atualizarHistorico();
+        alert('Erro ao baixar o cartaz.');
+        document.getElementById('btnDownload').disabled = false;
       }
     }
 
@@ -725,12 +572,13 @@
       const cartaz = document.getElementById('cartazFinal');
       
       if (container.style.display !== 'none') {
-        const maxWidth = container.clientWidth - 40; // espaço interno lateral
+        const maxWidth = container.clientWidth - 40;
         const scale = Math.min(1, maxWidth / 1080);
         cartaz.style.transform = `scale(${scale})`;
         wrapper.style.height = `${1350 * scale}px`;
       }
     }
+    
     window.addEventListener('resize', ajustarEscalaCartaz);
   </script>
 </body>
